@@ -15,7 +15,7 @@ type Jenkins_env struct {
 	Email    string `json:"email"`
 }
 
-func Setup(jenkins_env *Jenkins_env) {
+func (j *Jenkins_env) Setup() {
 	file, err := os.Open("./jenkins/jenkins_env.json")
 	if err != nil { // エラー処理
 		log.Fatal(err)
@@ -23,9 +23,9 @@ func Setup(jenkins_env *Jenkins_env) {
 	defer file.Close()
 
 	decoder := json.NewDecoder(file)
-	err = decoder.Decode(jenkins_env)
+	err = decoder.Decode(j)
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println(*jenkins_env)
+	fmt.Println(*j)
 }

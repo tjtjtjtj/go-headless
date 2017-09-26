@@ -12,7 +12,7 @@ var passwd = "xxxx"
 
 func main() {
 	jenkins_env := new(jenkins.Jenkins_env)
-	jenkins.Setup(jenkins_env)
+	jenkins_env.Setup()
 
 	driver := agouti.ChromeDriver(agouti.Desired(agouti.Capabilities{
 		"chromeOptions": map[string][]string{
