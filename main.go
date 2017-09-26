@@ -4,17 +4,19 @@ import (
 	"log"
 
 	"github.com/sclevine/agouti"
+	"github.com/tjtjtjtj/go-headless/jenkins"
 )
 
 var id = "xxxx"
 var passwd = "xxxx"
 
 func main() {
+	jenkins_env := new(jenkins.Jenkins_env)
+	jenkins.Setup(jenkins_env)
+
 	driver := agouti.ChromeDriver(agouti.Desired(agouti.Capabilities{
 		"chromeOptions": map[string][]string{
 			"args": []string{
-				// There is no GPU on our Ubuntu box!
-				//"disable-gpu",
 				"headless",
 			},
 		},
