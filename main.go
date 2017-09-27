@@ -7,9 +7,6 @@ import (
 	"github.com/tjtjtjtj/go-headless/jenkins"
 )
 
-var id = "xxxx"
-var passwd = "xxxx"
-
 func main() {
 	jenkins_env := new(jenkins.Jenkins_env)
 	jenkins_env.Setup()
@@ -39,8 +36,8 @@ func main() {
 
 	identity := page.FindByID("j_username")
 	password := page.FindByName("j_password")
-	identity.Fill(id)
-	password.Fill(passwd)
+	identity.Fill(jenkins_env.User_id)
+	password.Fill(jenkins_env.Password)
 	if err := page.FindByID("yui-gen1-button").Submit(); err != nil {
 		log.Fatalf("Failed to login:%v", err)
 	}
