@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"strings"
 
 	"github.com/sclevine/agouti"
 	"github.com/tjtjtjtj/go-headless/jenkins"
@@ -32,15 +33,21 @@ func main() {
 		log.Fatalf("Failed to navigate:%v", err)
 	}
 
-	page.Screenshot("/tmp/jenkins1.jpg")
+	page_html, _ := page.HTML()
+	if strings.Contains(page_html, "Unlock Jenkins") {
+		jenkins.Initial(page)
+	} else {
 
-	identity := page.FindByID("j_username")
-	password := page.FindByName("j_password")
-	identity.Fill(jenkins_env.User_id)
-	password.Fill(jenkins_env.Password)
-	if err := page.FindByID("yui-gen1-button").Submit(); err != nil {
-		log.Fatalf("Failed to login:%v", err)
+		page.Screenshot("/tmp/jenkins1.jpg")
+
+		identity := page.FindByID("j_username")
+		password := page.FindByName("j_password")
+		identity.Fill(jenkins_env.User_id)
+		password.Fill(jenkins_env.Password)
+		if err := page.FindByID("yui-gen1-button").Submit(); err != nil {
+			log.Fatalf("Failed to login:%v", err)
+		}
+
+		page.Screenshot("/tmp/jenkins2.jpg")
 	}
-
-	page.Screenshot("/tmp/jenkins2.jpg")
 }
